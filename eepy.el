@@ -14,10 +14,12 @@
                                                   (when (boundp 'bytecomp-filename) bytecomp-filename)
                                                   buffer-file-name))))
   (add-to-list 'load-path eepy-install-dir))
-  
+
 
 
 (require 'eepy-completion)
 (require 'eepy-ropemacs)
+(require 'eepy-checker)
+(require 'eepy-doc)
 
 (provide 'eepy)
