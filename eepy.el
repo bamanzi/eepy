@@ -17,9 +17,11 @@
 
 
 
+(require 'eepy-menu)
 (require 'eepy-completion)
 (require 'eepy-ropemacs)
 (require 'eepy-checker)
 (require 'eepy-doc)
+(require 'eepy-pymisc)
 
 (provide 'eepy)
