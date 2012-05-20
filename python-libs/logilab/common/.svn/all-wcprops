@@ -1,0 +1,257 @@
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common
+END
+shellutils.py
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/shellutils.py
+END
+pytest.py
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/pytest.py
+END
+__pkginfo__.py
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/__pkginfo__.py
+END
+tasksqueue.py
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/tasksqueue.py
+END
+dbf.py
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/dbf.py
+END
+urllib2ext.py
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/urllib2ext.py
+END
+deprecation.py
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/deprecation.py
+END
+hg.py
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/hg.py
+END
+visitor.py
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/visitor.py
+END
+__init__.py
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/__init__.py
+END
+fileutils.py
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/fileutils.py
+END
+vcgutils.py
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/vcgutils.py
+END
+modutils.py
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/modutils.py
+END
+daemon.py
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/daemon.py
+END
+optik_ext.py
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/optik_ext.py
+END
+contexts.py
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/contexts.py
+END
+corbautils.py
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/corbautils.py
+END
+cli.py
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/cli.py
+END
+optparser.py
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/optparser.py
+END
+clcommands.py
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/clcommands.py
+END
+xmlutils.py
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/xmlutils.py
+END
+pdf_ext.py
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/pdf_ext.py
+END
+sphinx_ext.py
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/sphinx_ext.py
+END
+sphinxutils.py
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/sphinxutils.py
+END
+tree.py
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/tree.py
+END
+interface.py
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/interface.py
+END
+graph.py
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/graph.py
+END
+cache.py
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/cache.py
+END
+proc.py
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/proc.py
+END
+textutils.py
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/textutils.py
+END
+decorators.py
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/decorators.py
+END
+logging_ext.py
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/logging_ext.py
+END
+testlib.py
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/testlib.py
+END
+configuration.py
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/configuration.py
+END
+umessage.py
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/umessage.py
+END
+pyro_ext.py
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/pyro_ext.py
+END
+date.py
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/date.py
+END
+compat.py
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/compat.py
+END
+debugger.py
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/debugger.py
+END
+xmlrpcutils.py
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/xmlrpcutils.py
+END
+changelog.py
+K 25
+svn:wc:ra_dav:version-url
+V 95
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/changelog.py
+END
+table.py
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/!svn/ver/274/trunk/_emacs.d/site-lisp/packages/epy/python-libs/logilab/common/table.py
+END

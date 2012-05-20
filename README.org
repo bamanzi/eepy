@@ -17,7 +17,7 @@ eepy is based on [[https://github.com/gabrielelanaro/emacs-for-python][Gabriele 
    * a new auto-complete source with external API files (SciTE way)
 
 *** improved flymake
-****  eepy uses this fork version of flymake.el: https://github.com/illusori/emacs-flymake
+  *  eepy uses this fork version of flymake.el: https://github.com/illusori/emacs-flymake
      * Support for queuing up syntax checks once a certain number are in-progress.
      * Support for placing temporary files in the system temporary directory.
      * Spawns only one buffer-modification timer check rather than one per buffer.
@@ -26,18 +26,18 @@ eepy is based on [[https://github.com/gabrielelanaro/emacs-for-python][Gabriele 
      * Improved error message classification. (err/warn/info, customizable regexp)
      * Support for new languages: Javascript and CSS.
      * Minor other bug fixes.
-**** eepy's changes
-     * use =flymake-cursor.el= to displays flymake msg in minibuffer when cursor moves to corresponding position
-     * you can switch flymaker within between epylint/pep8/pyflakes/pychecker when editing.
-       (not only before eepy start-up)
-     * you can invoke flymaker manually with =eepy-flymake-with=
-     
+  * eepy's changes
+    * Python package pep8 & pylint already bundled in this suite. You don't need to install them by yourself.
+    * Use =flymake-cursor.el= to displays flymake msg in minibuffer when cursor moves to corresponding position
+    * You can switch flymaker within between epylint/pep8/pyflakes/pychecker when editing.
+      (not only before eepy start-up)
+    * You can invoke flymaker manually with =eepy-flymake-with=
+
 *** python documentation
    * chm
      + keyhh on windows
-     + [ ] ??? on windows (which one supports keyword argumenting?)
    * pycompletemine's <M-f1>, <M-f3>
-   * `info-lookup-symbol' and python document in texinfo format 
+   * `info-lookup-symbol': query python document in texinfo format 
      (stolen from `info-lookup` from [[http://www.loveshack.ukfsn.org/emacs/][loveshack's python.el]])
      - [ ] python documentation in info format (not available in python 2.6/2.7's official packages)
      - [ ] or, [[https://bitbucket.org/jonwaltman/pydoc-info/][pydoc-info]] ?
@@ -87,18 +87,27 @@ eepy is based on [[https://github.com/gabrielelanaro/emacs-for-python][Gabriele 
 #+begin_src emacs-lisp
      (add-to-list 'load-path "/some/where/storing/eepy")
 #+end_src
-  2. Load feature `eepy' in dotemacs
+  2. On Linux, make sure all files in folder `bin' have x permission
+#+begin_src bash
+     chmod u+x /some/where/storing/eepy/bin/*
+#+end_src
+     (On Windows, you don't need to do anything).
+  3. Load feature `eepy', either in dotemacs
 #+begin_src emacs-lisp
      (require 'eepy)
 #+end_src
-  or load on demand:
+  or on demand:
 #+begin_example
-     M-x load-library RET eepy
-#+end_src
-  3. Then open your python source files to edit. You can access most features
+     M-x load-library RET eepy RET
+#+end_example
+  4. Then open your python source files to edit. You can access most features
      from the `eepy' menu.
 
 *** If you want to customize something
-  Edit `eepy-custom.el' to suit your needs, and then load feature `eepy-custom' rather than `eepy'.
+   Just customize eepy group.
+#+begin_example
+   M-x customize-group RET eepy RET
+#+end_example
+   Or, you can edit `eepy-custom.el' to suit your needs, and then load `eepy-custom' rather than `eepy'.
 
-  Refer [[file:Usage.org]] for detail info.
+   Refer [[file:Usage.org]] for detail info.
