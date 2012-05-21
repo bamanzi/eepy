@@ -1,7 +1,9 @@
-;; query python document
+;;; eepy-doc.el --- python document querying 
 
-;; This file is part of EEPY (Enhanced Emacs for Python)
-;; 
+;; This file is part of EEPY (Enhanced Emacs for Python) suite
+;;   https://github.com/bamanzi/eepy/
+
+(require 'eepy-init)
 
 ;;** `info-lookup-symbol'
 ;; With python 2.6's switching to sphinx as documentation tool, the texinfo
@@ -15,7 +17,10 @@
 ;; But if you're lazy, you can force to use python-2.5's info file
 ;;   http://packages.debian.org/squeeze/python2.5-doc
 (defvar eepy-python-info-force-version "2.5"
-  "Force using python X.x's texinfo documents.)
+  "The version number used to look for pythonX.X-{ref,lib}.info file.
+
+This is just useful when the version number of your python installation
+is different from the one of your python info docs.")
 
 ;;stolen from Dave Love's python.el
 (defun python-init-info-look ()
@@ -27,7 +32,7 @@ Used with `eval-after-load'."
                             (shell-command-to-string (concat python-command " -V"))))
                        (string-match "^Python \\([0-9]+\\.[0-9]+\\>\\)" s)
                        (match-string 1 s)))
-         (version (or eepy-python-info-foce-version py-version))
+         (version (or eepy-python-info-force-version py-version))
          ;; Whether info files have a Python version suffix, e.g. in Debian.
          (versioned
           (with-temp-buffer
@@ -94,13 +99,15 @@ Used with `eval-after-load'."
 
 (eval-after-load "info-look" '(python-init-info-look))
 
+
 ;;** CHM (only available on Windows)
-(defcustom eepy-chm-file-path "python.chm"
+;;TODO: try to auto-detect (or get from registry)
+(defcustom eepy-python-chm-file-path "c:/python27/doc/python272.chm"
   :group 'eepy
   :type 'filename
   "Path to pythonXXx.chm")
 
-;;You need to install `keyhh' utility
+;;NOTE: You need to install `keyhh' utility
 ;; http://www.keyworks.net/keyhh.htm
 ;;KeyHH -MyHelp -#klink "ActiveX Control Wizard" htmlhelp.chm
 (defun chm-keyword-lookup (typeid help-file symbol)
@@ -108,24 +115,29 @@ Used with `eval-after-load'."
   (interactive)
   (start-process "CHM keyword lookup" nil
                  "keyhh.exe"
-                 (concat "-" typeid) "-#klink"
-                 (format "'%s'" symbol)
+                 (concat "-" typeid) 
+                 "-#klink" (format "'%s'" symbol)
                  help-file ))
 
-(defun eepy-chm-keyword-help (symbol)
+(defun eepy-chm-keyword-lookup (symbol)
   (interactive
    (list (read-string "Help on symbol(CHM): "
                       (or (thing-at-point 'symbol) ""))))
-  (chm-keyword-lookup "EEPY" eepy-chm-file-path symbol))
+  (if (file-exists-p epy-python-chm-file)
+      (chm-keyword-lookup "EEPY" eepy-python-chm-file-path symbol)
+   (message "File not exists: %s" epy-python-chm-file)))
+
 
 ;;** pylookup
 ;;TODO: http://taesoo.org/Opensource/Pylookup
+
 
 ;;** haddoc
 ;;haddoc: Browse HTML Python Documentation From Emacs
 ;;TODO: http://furius.ca/haddoc/
 
-;;** pydoc
+
+;;** pydoc command line
 ;;stolen from http://stackoverflow.com/questions/1054903/how-do-you-get-python-documentation-in-texinfo-info-format
 (defun pydoc (&optional arg)
   (interactive)
