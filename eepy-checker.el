@@ -1,4 +1,9 @@
-;;* static checker and flymake checker
+;;; eepy-checker.el --- static checker and flymake checker for EEPY suite
+
+;; This file is part of EEPY (Enhanced Emacs for Python)
+;;   https://github.com/bamanzi/eepy
+
+(require 'eepy-init)
 
 ;;** develock
 ;;(setq develock-auto-enable nil)
@@ -93,7 +98,7 @@ e.g.
 
 Make sure a `%f' is included in the command line"
   :type '(choice (const :tag "Off" nil)
-                 (const :tag "epylint"    "epylint \"%f\"")
+                 (const :tag "pylint"    "epylint \"%f\"")
                  (const :tag "pep8"       "pep8 \"%f\"")
                  (const :tag "pycheckers" "pycheckers \"%f\""  )
                  (const :tag "pyflakes"   "pyflakes \"%f\"")
@@ -111,7 +116,7 @@ Make sure a `%f' is included in the command line"
 
 (add-to-list 'flymake-allowed-file-name-masks '("\\.pyw?\\'" flymake-eepy-init))
 
-(defun eepy-flymake-with (checker-cmdline)
+(defun eepy-flymake-with (cmdline)
   (interactive
       (list (ido-completing-read "Checker: "
                               '("epylint \"%f\""
