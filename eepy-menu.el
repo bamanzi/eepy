@@ -1,9 +1,21 @@
-;;;_ . eepy menu
-(require 'easymenu)
+;;; eepy-menu.el -- menu for EEPY suite
 
-(require 'eepy-ropemacs)
+;; This file is part of Enhaneced Emacs for PYthon suite
+;;   http://github.com/bamanzi/eepy
+
+;; Copyright (C) 2012 Ba Manzi <bamanzi@gmail.com>
+;; This file is distributed under GPL v2.
+
+(require 'eepy-init)
+
 (require 'eepy-checker)
+(require 'eepy-ropemacs)
+(require 'eepy-completion)
+(require 'eepy-doc)
+(require 'eepy-pymisc)
 (require 'eepy-misc)
+
+(require 'easymenu)
 
 (defun define-menu-for-eepy (keymap)
   (easy-menu-define eepy-menu keymap
@@ -30,9 +42,14 @@
       ;;  :style toggle :selected lambda-mode
       ;;  :help "Pretty-print lambdas"]
       ["Develock mode" develock-mode
-       :help "A lightweight way to highlight code formatting problems (indentation, whitespaces, long lines...)"]
-      ["Highlight indentation mode" highlight-indentation
-       :style toggle :selected highlight-indent-active
+       :help "A lightweight way to highlight code formatting problems (indentation, whitespaces, long lines...)"
+       :style toggle :selected (and (fboundp 'develock-mode) develock-mode)]
+      ["Highlight indentation mode" (if (fboundp 'highlight-indentation-mode)  
+                                        (highlight-indentation-mode) ;;https://github.com/antonj/Highlight-Indentation-for-Emacs
+                                      (highlight-indentation))  ;;python-mode project
+       :style toggle :selected (if (boundp 'highlight-indent-active)
+                                   highlight-indent-active
+                                 highlight-indentation-mode)                              
        :help "Highlight indentation."]
       "--"
       ["Smart operator mode" smart-operator-mode
@@ -45,10 +62,10 @@
        ["on/off" auto-complete-mode
         :style toggle :selected auto-complete-mode]
        ["Emacs builtin completion" (ac-toggle-source 'ac-source-python-builtin)
-        :style toggle :selected (memq ac-source-python-builtin ac-sources)]
-       ["pycompletemine source"    (ac-toogle-source 'ac-source-pycompletemine)
+        :style toggle :selected (memq 'ac-source-python-builtin ac-sources)]
+       ["pycompletemine source"    (ac-toggle-source 'ac-source-pycompletemine)
         :active (boundp 'ac-source-pycompletemine) ;;and (boundp 'py-shell)
-        :style toggle :selected (memq ac-source-pycompletemine ac-sources)]
+        :style toggle :selected (memq 'ac-source-pycompletemine ac-sources)]
        ["ropemacs source"          (ac-toggle-source 'ac-source-nropemacs)
         :active nil
         :style toggle :selected (memq 'ac-source-nropemacs ac-sources)]
@@ -68,11 +85,15 @@
        ["PEP8"      eepy-pep8 t]
        ["Pyflakes"  eepy-pyflake t]
        ["Pychecker" eepy-pychecker t]
+       "--"
+       ["Ask for saving files before syntax checking"
+        (setq compilation-ask-about-save (not compilation-ask-about-save))
+        :style toggle :selected compilation-ask-about-save]
        )
       ("Flymake"
        ["on/off"          flymake-mode
         :style toggle :selected flymake-mode]
-       ["Epylint"               (eepy-flymake-with            eepy-flymake-cmdline-epylint)
+       ["Pylint"               (eepy-flymake-with            eepy-flymake-cmdline-epylint)
         :style radio  :selected (string= eepy-flymake-cmdline eepy-flymake-cmdline-epylint)]
        ["PEP8"                  (eepy-flymake-with            eepy-flymake-cmdline-pep8)
         :style radio  :selected (string= eepy-flymake-cmdline eepy-flymake-cmdline-pep8)]
@@ -101,6 +122,8 @@
        :active nil]
       ["python.chm (windows)" eepy-python-chm-keyword
        :active (eq window-system 'w32)]
+      ["pydoc" eepy-pydoc
+       :help "Query help with 'pydoc' command line tool"]
       "--"
       ("Project"
        ["open rope project..." eepy-rope-open-project]

@@ -37,11 +37,15 @@ eepy is based on [[https://github.com/gabrielelanaro/emacs-for-python][Gabriele 
 *** python documentation
    + chm
      - keyhh on windows
-   + pycompletemine's <M-f1>, <M-f3>
-   + `info-lookup-symbol': query python document in texinfo format 
+   + pycompletemine's sub-features
+     - py-complete-help-thing-at-point(<M-f1>)
+     - py-complete-signature-expr(<M-f2>)
+     - py-complete-help(<M-f3>)
+   + `info-lookup-symbol'(C-h S): query python document in texinfo format 
      (stolen from `info-lookup` from [[http://www.loveshack.ukfsn.org/emacs/][loveshack's python.el]])
      - [ ] python documentation in info format (not available in python 2.6/2.7's official packages)
      - [ ] or, [[https://bitbucket.org/jonwaltman/pydoc-info/][pydoc-info]] ?
+   + `pydoc' command line tool
 
 *** support different python major modes
    + emacs 23 & 24's built-in python-mode
@@ -68,19 +72,6 @@ eepy is based on [[https://github.com/gabrielelanaro/emacs-for-python][Gabriele 
    - disabled autopair-mode by default
    - disabled smart-operator-mode by default 
    - remove epy's configurations file epy-bindings, epy-editing
-
-** Limitations & TODO
-   + Only tested on GUI version of Emacs 23.1 & 24.0.95, on Windows XP SP2 & LinuxMint 11.
-     - [ ] test on console version of Emacs, esp. fringe stuff (code folding, flymake etc)
-   + Only tested on CPython 2.6 & 2.7
-     - [ ] Currently on plan for CPython 3.x or Jython/IronPython
-   + IPython shell only works under python-mode.el.
-     - [ ] Make it work on other python major modes (?)
-   + [ ] Project support (?)
-   + [ ] Yasnippet not tested
-   + python documentation
-     - [ ] [[https://github.com/tsgates/pylookup][pylookup]] (not yet)
-     - [ ] pydoc command line?
 
 ** Quick Start
 *** Quick Start
@@ -110,4 +101,26 @@ eepy is based on [[https://github.com/gabrielelanaro/emacs-for-python][Gabriele 
    M-x customize-group RET eepy RET
 #+end_example
    Or, you can edit `eepy-custom.el' to suit your needs, and then load `eepy-custom' rather than `eepy'.
+
+** Limitations & TODO
+   + Only tested on GUI version of Emacs 23.1 & 24.0.95, on Windows XP SP2 & LinuxMint 11.
+     - [ ] test on console version of Emacs, esp. fringe stuff (code folding, flymake etc)
+   + Only tested on CPython 2.6 & 2.7
+     - [ ] Currently on plan for CPython 3.x or Jython/IronPython
+   + Test virtualenv feature of EPY
+   + IPython shell only works under python-mode.el.
+     - [ ] Make it work on other python major modes (possible?)
+     - [ ] Workaround for a problem on Windows (python -i)
+   + [ ] Project support
+     - epy-0.3 uses eproject, but it's better for file-based project, not good for folder-based project
+       (in which case, user shouldn't need to maintain the file list)
+     - folder-based project
+       - [ ] eproject (jrockway)
+       - [ ] projectile 
+   + [ ] Yasnippet not tested
+   + python documentation
+     - [ ] [[https://github.com/tsgates/pylookup][pylookup]] (not yet)
+     - [X] pydoc command line?
+     - [ ] would keyhh work on wine? (low priorty)
+   + Make stacktrace lines clickable (in eshell)
 

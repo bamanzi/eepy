@@ -1,7 +1,10 @@
 ;;; eepy-checker.el --- static checker and flymake checker for EEPY suite
 
-;; This file is part of EEPY (Enhanced Emacs for Python)
-;;   https://github.com/bamanzi/eepy
+;; This file is part of Enhaneced Emacs for PYthon suite
+;;   http://github.com/bamanzi/eepy
+
+;; Copyright (C) 2012 Ba Manzi <bamanzi@gmail.com>
+;; This file is distributed under GPL v2.
 
 (require 'eepy-init)
 
@@ -20,23 +23,37 @@
 
 
 ;;** static checker
-(defun eepy-pylint ()
-  (interactive)
-  (let ( (compile-command (concat "epylint"   ;; "pylint -rn -f parseable "
-                                  (shell-quote-argument (buffer-file-name)))) )
+(defun eepy-lint-file-with (cmdline)
+  (interactive "sCmdline:")
+  (let ((compile-command (if (string-match "%f" cmdline)
+                             (replace-regexp-in-string "%f"
+                                                       (shell-quote-argument (file-name-nondirectory (buffer-file-name)))
+                                                       cmdline)
+                           (concat cmdline " " (shell-quote-argument (file-name-nondirectory (buffer-file-name)))))))
     (call-interactively 'compile)
   ))
 
+   
+(defun eepy-pylint ()
+  (interactive)
+  (eepy-lint-file-with "epylint")  ;; "pylint -rn -f parseable "
+  )
 
 (defun eepy-pep8 ()
   (interactive)
-  (let ( (compile-command (concat "pep8 "
-                                  (shell-quote-argument (buffer-file-name)))) )
-    (call-interactively 'compile)  
-  ))
+  (eepy-lint-file-with "pep8")
+  )
 
-;;TODO: pychecker
-;;TODO: pyflakes
+(defun eepy-pychecker ()
+  (interactive)
+  (eepy-lint-file-with "pychecker")
+  )
+
+(defun eepy-pyflakes ()
+  (interactive)
+  (eepy-lint-file-with "pyflakes")
+  )
+  
 
 (defcustom eepy-static-checker "epylint"
   "Default static checker/lint program for python."
@@ -56,13 +73,11 @@
   (setq eepy-static-checker checker)
   (message "Default python checker set to %s." checker))
 
-(defun eepy-check ()
+(defun eepy-lint-file ()
   "Static check current file with `eepy-static-checker'"
   (interactive)
-  (let ( (compile-command (concat eepy-static-checker " "
-                                  (shell-quote-argument (buffer-file-name)))) )
-    (call-interactively 'compile)  
-  ))
+  (eepy-lint-file-with eepy-static-checker)
+  )
 
 ;;** flymake
 (when (or (require 'flymake (concat eepy-install-dir "elisp/flymake") t)
@@ -84,7 +99,7 @@
           (file-name-directory buffer-file-name))))
 
 (defcustom eepy-flymake-cmdline nil
-  "The static checker used for flymake-mode in python.
+  "Syntax checker command line used for flymake-mode in python.
 
 The CMDLINE should be something like:
 
@@ -98,7 +113,7 @@ e.g.
 
 Make sure a `%f' is included in the command line"
   :type '(choice (const :tag "Off" nil)
-                 (const :tag "pylint"    "epylint \"%f\"")
+                 (const :tag "pylint"     "epylint \"%f\"")
                  (const :tag "pep8"       "pep8 \"%f\"")
                  (const :tag "pycheckers" "pycheckers \"%f\""  )
                  (const :tag "pyflakes"   "pyflakes \"%f\"")

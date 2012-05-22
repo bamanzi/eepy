@@ -1,6 +1,12 @@
 ;;; eepy-init.el --- initialization of EEPY
 
+;; This file is part of Enhaneced Emacs for PYthon suite
+;;   http://github.com/bamanzi/eepy
 
+;; Copyright (C) 2012 Ba Manzi <bamanzi@gmail.com>
+;; This file is distributed under GPL v2.
+
+;;** path initialization
 
 ;; Trick to get the filename of the installation directory
 (defconst eepy-install-dir
@@ -31,11 +37,31 @@
 (let ( (pylibs-path (concat eepy-install-dir "python-libs")) )
        (setenv "PYTHONPATH" (concat pylibs-path path-separator (getenv "PYTHONPATH"))))
 
+;;** customization group
 (defgroup eepy nil
   "emacs-for-python package"
   :group  'python
   :prefix "eepy-")
 
+;;** major modes
+(defcustom eepy-prefered-major-mode 'built-in
+  "Default python major mode loaded automatically by EEPY."
+  :group 'eepy
+  :type '(choice (const :tag "built-in"          'built-in)
+                 (const :tag "python-mode.el"    'python-mode-el)
+                 (const :tag "fgallina"          'fgallina)
+                 (const :tag "loveshack"         'loveshack)))
+
+(cond
+ ((eq eepy-prefered-major-mode 'built-in)
+  (require 'python))
+ ((eq eepy-prefered-major-mode 'python-mode-el)
+  (require 'python-mode
+           (concat eepy-install-dir "python-modes/python-mode-el/python-mode")))
+ (t
+  (require 'python
+           (concat eepy-install-dir "python-modes/" (format "%s" 'fgallina) "python"))
+  ))
 
 (defun eepy-current-buffer-major-mode-vendor ()
   "Detect the vendor of current buffer's major-mode.
@@ -52,9 +78,9 @@ here our check are buffer-specific."
       'loveshack)                   ;; http://www.loveshack.ukfsn.org/emacs/NEWS.python
      (t
       'built-in)))))
-     
 
 
+;;** pymacs
 (autoload 'pymacs-load  "pymacs"
   "Import the Python module named MODULE into Emacs." t)
 (autoload 'pymacs-eval  "pymacs"

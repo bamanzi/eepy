@@ -1,11 +1,15 @@
 ;;; eepy-doc.el --- python document querying 
 
-;; This file is part of EEPY (Enhanced Emacs for Python) suite
-;;   https://github.com/bamanzi/eepy/
+;; This file is part of Enhaneced Emacs for PYthon suite
+;;   http://github.com/bamanzi/eepy
+
+;; Copyright (C) 2012 Ba Manzi <bamanzi@gmail.com>
+;; This file is distributed under GPL v2.
 
 (require 'eepy-init)
 
-;;** `info-lookup-symbol'
+;;** Info - `info-lookup-symbol' (C-h S)
+
 ;; With python 2.6's switching to sphinx as documentation tool, the texinfo
 ;; document no longer provided with python official releases.
 ;;
@@ -23,6 +27,7 @@ This is just useful when the version number of your python installation
 is different from the one of your python info docs.")
 
 ;;stolen from Dave Love's python.el
+;;  
 (defun python-init-info-look ()
   "Set up info-look for Python.
 Tries to take account of versioned Python Info files, e.g. Debian's
@@ -139,11 +144,11 @@ Used with `eval-after-load'."
 
 ;;** pydoc command line
 ;;stolen from http://stackoverflow.com/questions/1054903/how-do-you-get-python-documentation-in-texinfo-info-format
-(defun pydoc (&optional arg)
-  (interactive)
-  (when (not (stringp arg))
-    (setq arg (thing-at-point 'word)))
-
+(defun eepy-pydoc (&optional arg)
+  (interactive (list
+				(read-string "Call pydoc with arg: "
+							 (with-syntax-table python-dotty-syntax-table
+							   (current-word)))))
   (setq cmd (concat "pydoc " arg))
   (ad-activate-regexp "auto-compile-yes-or-no-p-always-yes")
   (shell-command cmd)

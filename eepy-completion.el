@@ -1,6 +1,12 @@
-;;* code completion for eepy
+;;; eepy-completion.el -- code completion for EEPY suite
 
-(require 'eepy)
+;; This file is part of Enhaneced Emacs for PYthon suite
+;;   http://github.com/bamanzi/eepy
+
+;; Copyright (C) 2012 Ba Manzi <bamanzi@gmail.com>
+;; This file is distributed under GPL v2.
+
+(require 'eepy-init)
 
 
 ;;** auto-complete
@@ -48,8 +54,9 @@ remove (if DESIRE <= 0). If DESIRE not given, it would be toggled."
 
 
 (defcustom eepy-auto-complete-sources
-  '(ac-source-python-builtin
-    ;;ac-source-pycompletemine
+  '(
+    ;;ac-source-python-builtin
+    ac-source-pycompletemine
     ;;ac-source-scite-api
     ;;ac-source-yasnippet
     )
@@ -62,7 +69,7 @@ by ropeproject hook."
 
 (defun python-mode-init-ac-sources ()
   (mapc #'(lambda (source)
-            (add-to-list 'ac-source source))
+            (add-to-list 'ac-sources source))
         eepy-auto-complete-sources))
 
 (add-hook 'python-mode-hook 'python-mode-init-ac-sources)  
