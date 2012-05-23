@@ -16,6 +16,8 @@ eepy is based on [[https://github.com/gabrielelanaro/emacs-for-python][Gabriele 
      - made it work on python-shell
    + a new auto-complete source for GNU Emacs's built-in python completion
    + a new auto-complete source with external API files (SciTE way)
+   + auto-complete source for ipython (only python-mode.el supported). Stolen from
+     https://bitbucket.org/tavisrudd/emacs.d/src/tip/dss-completion.el
 
 *** improved flymake
   +  eepy uses this fork version of flymake.el: https://github.com/illusori/emacs-flymake

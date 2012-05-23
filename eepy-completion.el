@@ -59,6 +59,7 @@ remove (if DESIRE <= 0). If DESIRE not given, it would be toggled."
     ac-source-pycompletemine
     ;;ac-source-scite-api
     ;;ac-source-yasnippet
+    ;;ac-source-ipython
     )
   "Default additional auto-completion sources for python-mode
 (besides `ac-sources' default value).
@@ -129,6 +130,97 @@ by ropeproject hook."
     (if turn-on
         (add-to-list 'ac-sources 'ac-source-pycompletemine)
       (setq ac-sources (remq ac-source-pycompletemine ac-sources)))))
+
+;;*** ipython (only python-mode.el supported)
+;;stolen from https://bitbucket.org/tavisrudd/emacs.d/src/tip/dss-completion.el
+
+;;; partially working support for using auto complete in ipython buffers
+(require 'ipython)
+(defun dss-ipython-completion-candidate (&optional use-ido)
+  "This is a hacked version of ipython-complete from ipython.el,
+    which can be used with either autocomplete-mode or ido.
+
+    It mostly works but there are a few bugs that need resolving...
+
+(defun dss/start-ipy-complete ()
+  (interactive)
+  (setq ac-sources '(ac-source-dss-ipy-dot
+                     ac-source-dss-ipy
+                     ac-source-filename)))
+(add-hook 'ipython-shell-hook 'dss/start-ipy-complete)
+(add-hook 'py-shell-hook 'dss/start-ipy-complete)
+
+"
+  (let* ((ugly-return nil)
+         (sep ";")
+         (python-process (or (get-buffer-process (current-buffer))
+                                        ;XXX hack for .py buffers
+                             (get-process py-which-bufname)))
+         (beg (save-excursion (skip-chars-backward "a-z0-9A-Z_." (point-at-bol))
+                               (point)))
+         (end (point))
+         (pattern (buffer-substring-no-properties beg end))
+
+         (completions nil)
+         (completion nil)
+         (comint-preoutput-filter-functions
+          (append comint-preoutput-filter-functions
+                  '(ansi-color-filter-apply
+                    (lambda (string)
+                      (setq ugly-return (concat ugly-return string))
+                      "")))))
+
+    (message pattern)
+    (process-send-string python-process
+                         (format ipython-completion-command-string pattern))
+    (accept-process-output python-process)
+    (setq completions
+          (split-string (substring ugly-return 0 (position ?\n ugly-return)) sep))
+
+    (setq completions (if (string-match "\\." pattern)
+                          (mapcar
+                             (lambda (completion)
+                               (car (last (cdr (split-string completion "\\.")))))
+                             completions)
+                        completions))
+    (if use-ido
+        (let* ((prefix-beg (if (string-match "\\." pattern)
+                               (save-excursion (skip-chars-backward "a-z0-9A-Z_" (point-at-bol))
+                                               (point))
+                             beg))
+               (prefix (buffer-substring-no-properties prefix-beg end))
+               (choice (if (<= (length completions) 1)
+                           (car completions)
+                         (ido-completing-read "Choice:" completions nil nil prefix nil prefix)))
+               )
+          (if (and choice (not (string= pattern choice)))
+              (progn
+                (message "%s %s %s %s" prefix prefix-beg beg (point-at-bol))
+                (delete-region prefix-beg end)
+                (insert choice))))
+      (progn
+        ;(message "not using ido")
+        completions))))
+
+
+(defun dss/ido-ipython-complete ()
+  (interactive)
+  (dss-ipython-completion-candidate t))
+
+(eval-after-load "python-mode"
+  `(progn
+     (ac-define-source dss-ipy
+       '((candidates . dss-ipython-completion-candidate)
+         (requires . 0)
+         (symbol . "f")))
+
+     (ac-define-source dss-ipy-dot
+       '((candidates . dss-ipython-completion-candidate)
+         (prefix . c-dot)
+         (requires . 0)
+         (symbol . "f")))
+     ))
+
 
 ;;*** auto-complete-scite-api
 ;;TODO: ...

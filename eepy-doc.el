@@ -108,9 +108,9 @@ Used with `eval-after-load'."
 ;;** CHM (only available on Windows)
 ;;TODO: try to auto-detect (or get from registry)
 (defcustom eepy-python-chm-file-path "c:/python27/doc/python272.chm"
+  "Full path of pythonXXx.chm"
   :group 'eepy
-  :type 'filename
-  "Path to pythonXXx.chm")
+  :type 'filename)
 
 ;;NOTE: You need to install `keyhh' utility
 ;; http://www.keyworks.net/keyhh.htm
