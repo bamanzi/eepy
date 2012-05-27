@@ -2,6 +2,8 @@
 
 Based on Gabriele Lanaro's *Emacs-for-Python*
 https://github.com/gabrielelanaro/emacs-for-python
+and Python Development Emacs Environment (PDEE)
+https://github.com/pdee/pdee
 
 ** Difference with emacs-for-python
 eepy is based on [[https://github.com/gabrielelanaro/emacs-for-python][Gabriele Lanaro's Emacs-for-Python]], with the following improvments & changes
@@ -19,7 +21,7 @@ eepy is based on [[https://github.com/gabrielelanaro/emacs-for-python][Gabriele 
    + auto-complete source for ipython (only python-mode.el supported). Stolen from
      https://bitbucket.org/tavisrudd/emacs.d/src/tip/dss-completion.el
 
-*** improved flymake
+*** improve flymake
   +  eepy uses this fork version of flymake.el: https://github.com/illusori/emacs-flymake
      - Support for queuing up syntax checks once a certain number are in-progress.
      - Support for placing temporary files in the system temporary directory.
@@ -70,7 +72,7 @@ eepy is based on [[https://github.com/gabrielelanaro/emacs-for-python][Gabriele 
     - turn on/off flymaker, and switch flymaker between pylint/pep8/pyflakes/pychecker
     - invoke syntax checking with pylint/pep8/pyflakes/pychecker 
 
-*** removed Gabriele Lanaro's personal preferences 
+*** remove Gabriele Lanaro's personal preferences 
    - disabled autopair-mode by default
    - disabled smart-operator-mode by default 
    - remove epy's configurations file epy-bindings, epy-editing
