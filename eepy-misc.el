@@ -41,15 +41,99 @@ This would get rid of some annoyance:
   "Display tree view of tags." t)
 
 
+;; get rid of cedet's imenu
+(defun eepy-fix-python-mode-imenu ()
+  (when (and (fboundp 'setq-mode-local)  ;;cedet already loaded
+             (or (not (boundp 'semantic-idle-scheduler-mode))  ;;semantic-mode not turn on
+                 (not semantic-idle-scheduler-mode)))    
+    (setq-mode-local python-mode
+                     imenu-create-index-function
+                     (if (eq beginning-of-defun-function 'py-beginning-of-defun-or-class) ;;python-mode.el
+                         'py-imenu-create-index
+                       'python-imenu-create-index))))
+
+;;(add-hook 'python-mode-hook 'eepy-fix-python-mode-imenu)
+
 ;;** code folding
 (autoload 'hideshowvis-minor-mode  "hideshowvis"
   "Toggle Hideshowvis minor mode on or off." t)
 (eval-after-load "hideshowvis"
   `(load "hideshow-fringe" 'noerror))
 
+(defcustom eepy-enable-hideshow t
+  "Whether to enable `hs-minor-mode' for code folding by default"
+  :group 'eepy)
+
+(defvar eepy-hideshow-expression
+  '("^\\s-*\\(?:def\\|class\\|if\\|else\\|for\\|try\\|except\\)\\>" nil "#" 
+    (lambda (arg)
+      (python-end-of-block)
+      (skip-chars-backward " \t\n"))
+    nil)
+  "Expression used in `hs-special-modes-alist' for `python-mode'.")
+
+(if nil
+	(let ((python-hideshow-exp
+	         '("^\\s-*\\(?:def\\|class\\|if\\|elif\\|else\\|for\\|try\\|except\\)\\>"
+	           nil
+	           "#" 
+	           (lambda (arg)
+	             (python-end-of-block)
+	             (skip-chars-backward " \t\n"))
+	           nil))
+	        (old-config (assoc 'python-mode hs-special-modes-alist)))
+	    (if old-config
+	        (setcdr old-config python-hideshow-exp)
+	      (add-to-list 'hs-special-modes-alist `(python-mode ,python-hideshow-exp)))))
+      
+(defun eepy-toggle-hideshow (&optional arg)
+  "Toggle `hs-minor-mode' for current buffer.
+
+If called with t or any positive number, turn on `hs-minor-mode';
+if called with any negative number, turn if off;
+otherwise, turn it on according to `eepy-enable-hideshow'."
+  (interactive "p")
+  (if (or (and arg (not (integerp arg)))  ;; t
+          (and (integerp arg) (> arg 0))  ;; >0
+          (and (not arg) eepy-enable-hideshow))
+      (if (and (require 'hideshowvis nil t)
+               (require 'hideshow-fringe nil t))
+          (hideshowvis-enable)
+        (hs-minor-mode t))
+    (when (and arg (< arg 0))
+      (if (fboundp 'hideshowvis-minor-mode)
+          (hideshowvis-minor-mode -1))
+      (hs-minor-mode -1))))
+
+(add-hook 'python-mode-hook 'eepy-toggle-hideshow 'append)
+
+;;*** outline
 (autoload 'qtmstr-outline-mode "qtmstr-outline"
   "TODO" t)
 
+(defcustom eepy-enable-outline nil
+  "Whether to enable `outline-minor-mode' for code folding by default."
+  :group 'eepy)
+
+(defun eepy-toggle-outline (&optional arg)
+  "Toggle `outline-minor-mode' for current buffer.
+
+If called with t or any positive number, turn on `outline-minor-mode';
+if called with any negative number, turn if off;
+otherwise, turn it on according to `eepy-enable-outline'."
+  (interactive "p")
+  (if (or (and arg (not (integerp arg)))  ;; t
+          (and (integerp arg) (> arg 0))  ;; >0
+          (and (not arg) eepy-enable-outline))
+      (if (require 'qtmstr-outline nil t)
+          (qtmstr-outline-mode t)
+        (outline-minor-mode t))
+    (when (and arg (< arg 0))
+      (if (fboundp 'qtmstr-outline-mode)
+          (qtmstr-outline-mode -1)
+      (hs-minor-mode -1)))))
+               
+;;(add-hook 'python-mode-hook 'eepy-toggle-outline 'append)
 
 ;;*** highlighting something
 (autoload 'pretty-lambda-mode "pretty-lambdada"
