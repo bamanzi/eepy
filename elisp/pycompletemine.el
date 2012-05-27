@@ -253,9 +253,11 @@
 
 (eval-after-load "python-mode"
   `(progn
-     (py-complete-init-keys py-mode-map)
-     (py-complete-init-keys py-shell-map)
-     (define-key py-shell-map "\C-i" 'py-complete)
+     (when (boundp 'py-mode-map) ;;not in python-mode.el >= 6.0.4
+         (py-complete-init-keys py-mode-map))
+     (when (boundp 'py-shell-map)
+       (py-complete-init-keys py-shell-map)
+       (define-key py-shell-map "\C-i" 'py-complete))
      ))
      
 

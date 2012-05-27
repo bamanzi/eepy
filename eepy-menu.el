@@ -144,7 +144,8 @@
 
 (eval-after-load "python-mode"
   `(progn
-     (define-menu-for-eepy py-mode-map)
+     (if (boundp 'py-mode-map) ;;not in python-mode.el >= 6.0.4
+         (define-menu-for-eepy py-mode-map))
      ))
 
 (provide 'eepy-menu)
