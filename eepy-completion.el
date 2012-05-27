@@ -135,7 +135,6 @@ by ropeproject hook."
 ;;stolen from https://bitbucket.org/tavisrudd/emacs.d/src/tip/dss-completion.el
 
 ;;; partially working support for using auto complete in ipython buffers
-(require 'ipython)
 (defun dss-ipython-completion-candidate (&optional use-ido)
   "This is a hacked version of ipython-complete from ipython.el,
     which can be used with either autocomplete-mode or ido.
@@ -209,6 +208,8 @@ by ropeproject hook."
 
 (eval-after-load "python-mode"
   `(progn
+     (require 'ipython)
+
      (ac-define-source dss-ipy
        '((candidates . dss-ipython-completion-candidate)
          (requires . 0)
