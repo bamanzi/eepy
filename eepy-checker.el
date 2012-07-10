@@ -23,7 +23,7 @@
 
 
 ;;** static checker
-(defun eepy-lint-file-with (cmdline)
+(defun eepy/lint-file-with (cmdline)
   (interactive "sCmdline:")
   (let ((compile-command (if (string-match "%f" cmdline)
                              (replace-regexp-in-string "%f"
@@ -36,22 +36,22 @@
    
 (defun eepy-pylint ()
   (interactive)
-  (eepy-lint-file-with "epylint")  ;; "pylint -rn -f parseable "
+  (eepy/lint-file-with "epylint")  ;; "pylint -rn -f parseable "
   )
 
 (defun eepy-pep8 ()
   (interactive)
-  (eepy-lint-file-with "pep8")
+  (eepy/lint-file-with "pep8")
   )
 
 (defun eepy-pychecker ()
   (interactive)
-  (eepy-lint-file-with "pychecker")
+  (eepy/lint-file-with "pychecker")
   )
 
 (defun eepy-pyflakes ()
   (interactive)
-  (eepy-lint-file-with "pyflakes")
+  (eepy/lint-file-with "pyflakes")
   )
   
 
@@ -76,7 +76,7 @@
 (defun eepy-lint-file ()
   "Static check current file with `eepy-static-checker'"
   (interactive)
-  (eepy-lint-file-with eepy-static-checker)
+  (eepy/lint-file-with eepy-static-checker)
   )
 
 ;;** flymake

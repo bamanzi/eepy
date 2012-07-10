@@ -29,7 +29,7 @@
 (require 'auto-complete)
 
 ;;a helper command
-(defun ac-toggle-source (source &optional desire)
+(defun eepy/toggle-ac-source (source &optional desire)
   "Add or remove a SOURCE in `ac-sources'.
 
 If DESIRE given, this source would be absolutely added (if DESIRE > 0) or

@@ -115,7 +115,7 @@ Used with `eval-after-load'."
 ;;NOTE: You need to install `keyhh' utility
 ;; http://www.keyworks.net/keyhh.htm
 ;;KeyHH -MyHelp -#klink "ActiveX Control Wizard" htmlhelp.chm
-(defun chm-keyword-lookup (typeid help-file symbol)
+(defun chm-lookup-keyword (typeid help-file symbol)
   "lookup a keyword in a CHM file and display it"
   (interactive)
   (start-process "CHM keyword lookup" nil
@@ -124,12 +124,12 @@ Used with `eval-after-load'."
                  "-#klink" (format "'%s'" symbol)
                  help-file ))
 
-(defun eepy-chm-keyword-lookup (symbol)
+(defun eepy-chm-lookup-keyword (symbol)
   (interactive
    (list (read-string "Help on symbol(CHM): "
                       (or (thing-at-point 'symbol) ""))))
   (if (file-exists-p epy-python-chm-file)
-      (chm-keyword-lookup "EEPY" eepy-python-chm-file-path symbol)
+      (chm-lookup-keyword "EEPY" eepy-python-chm-file-path symbol)
    (message "File not exists: %s" epy-python-chm-file)))
 
 

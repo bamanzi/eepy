@@ -25,7 +25,6 @@
       ["Choose method (anything)...)" anything-browse-code
        :active (fboundp 'anything-browse-code) ]
       ["Imenu tree" imenu-tree t]
-      ["Tags tree" tags-tree t]
       "--"
       ("Code folding"
        ["hs-minor-mode" hs-minor-mode
@@ -61,17 +60,17 @@
       ("Auto-Complete"
        ["on/off" auto-complete-mode
         :style toggle :selected auto-complete-mode]
-       ["Emacs builtin completion" (ac-toggle-source 'ac-source-python-builtin)
+       ["Emacs builtin completion" (eepy/toggle-ac-source 'ac-source-python-builtin)
         :style toggle :selected (memq 'ac-source-python-builtin ac-sources)]
-       ["pycompletemine source"    (ac-toggle-source 'ac-source-pycompletemine)
+       ["pycompletemine source"    (eepy/toggle-ac-source 'ac-source-pycompletemine)
         :active (boundp 'ac-source-pycompletemine) ;;and (boundp 'py-shell)
         :style toggle :selected (memq 'ac-source-pycompletemine ac-sources)]
-       ["ropemacs source"          (ac-toggle-source 'ac-source-nropemacs)
+       ["ropemacs source"          (eepy/toggle-ac-source 'ac-source-nropemacs)
         :active nil
         :style toggle :selected (memq 'ac-source-nropemacs ac-sources)]
-       ["yasnippets source"        (ac-toggle-source 'ac-source-yasnippet)
+       ["yasnippets source"        (eepy/toggle-ac-source 'ac-source-yasnippet)
         :style toggle :selected (memq 'ac-source-yasnippet ac-sources)]
-       ["scite-api source"         (ac-toogle-source 'ac-source-scite-api)
+       ["scite-api source"         (eepy/toggle-ac-source 'ac-source-scite-api)
         :active (boundp 'ac-source-scite-api)
         :style toggle :selected (memq 'ac-source-scite-api ac-sources)]
        )
@@ -120,7 +119,7 @@
        :style toggle :selected eldoc-mode]
       ["pylookup" pylookup-lookup
        :active nil]
-      ["python.chm (windows)" eepy-python-chm-keyword
+      ["python.chm (windows)" eepy-chm-lookup-keyword
        :active (eq window-system 'w32)]
       ["pydoc" eepy-pydoc
        :help "Query help with 'pydoc' command line tool"]
@@ -130,6 +129,7 @@
        ["auto-open ropeproject if found" eepy-toggle-auto-detect-rope-project
         :style toggle :selected eepy-auto-detect-rope-project]
        ["eproject" eproject t]
+       ["Tags tree" tags-tree t]
       )
       ("Misc"
        ["refactoring: rename current symbol" iedit-mode

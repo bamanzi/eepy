@@ -1,4 +1,13 @@
-;;* misc stuff that not closely related to Python
+;;; eepy-misc.el --- misc stuff of EEPY suite
+
+;; This file is part of Enhaneced Emacs for PYthon suite
+;;   http://github.com/bamanzi/eepy
+
+;; Copyright (C) 2012 Ba Manzi <bamanzi@gmail.com>
+;; This file is distributed under GPL v2.
+
+;; This file contains misc stuff that not closely related to Python
+
 
 ;;** browsing code within buffer
 (autoload 'idomenu  "idomenu"
@@ -8,14 +17,14 @@
 (autoload 'anything-browse-code  "anything-config"
   "Preconfigured anything to browse code." t)
 
-(defun idomenu-or-imenu ()
+(defun eepy/idomenu-or-imenu ()
   (interactive)
   (require 'idomenu nil t)
   (if (fboundp 'idomenu)
       (call-interactively 'idomenu)
     (call-interactively 'imenu)))
 
-(defun eepy-go-to-symbol-within-buffer ()
+(defun eepy/go-to-symbol-within-buffer ()
   "Go to symbol (definition) within current buffer.
 
 This would get rid of some annoyance:
@@ -31,7 +40,7 @@ This would get rid of some annoyance:
      anything-c-source-browse-code)))
 
 (unless (global-key-binding (kbd "M-g s"))
-  (define-key goto-map "s" 'eepy-go-to-symbol-within-buffer))
+  (define-key goto-map "s" 'eepy/go-to-symbol-within-buffer))
 
 ;;TODO: fix-imenu-create-index-function
 
@@ -42,7 +51,7 @@ This would get rid of some annoyance:
 
 
 ;; get rid of cedet's imenu
-(defun eepy-fix-python-mode-imenu ()
+(defun eepy/fix-python-mode-imenu ()
   (when (and (fboundp 'setq-mode-local)  ;;cedet already loaded
              (or (not (boundp 'semantic-idle-scheduler-mode))  ;;semantic-mode not turn on
                  (not semantic-idle-scheduler-mode)))    
@@ -52,7 +61,7 @@ This would get rid of some annoyance:
                          'py-imenu-create-index
                        'python-imenu-create-index))))
 
-;;(add-hook 'python-mode-hook 'eepy-fix-python-mode-imenu)
+;;(add-hook 'python-mode-hook 'eepy/fix-python-mode-imenu)
 
 ;;** code folding
 (autoload 'hideshowvis-minor-mode  "hideshowvis"
@@ -60,10 +69,11 @@ This would get rid of some annoyance:
 (eval-after-load "hideshowvis"
   `(load "hideshow-fringe" 'noerror))
 
-(defcustom eepy-enable-hideshow t
+(defcustom eepy/enable-hideshow t
   "Whether to enable `hs-minor-mode' for code folding by default"
   :group 'eepy)
 
+;;FIXME: not used yet
 (defvar eepy-hideshow-expression
   '("^\\s-*\\(?:def\\|class\\|if\\|else\\|for\\|try\\|except\\)\\>" nil "#" 
     (lambda (arg)
@@ -72,7 +82,10 @@ This would get rid of some annoyance:
     nil)
   "Expression used in `hs-special-modes-alist' for `python-mode'.")
 
-(if nil
+(defun eepy/let-hideshow-more ()
+  "let `hideshow' also handle `if/elif/else/for/try/except'.
+
+By default configuration (in python.el), hideshow would only handle `def' and `class'."
 	(let ((python-hideshow-exp
 	         '("^\\s-*\\(?:def\\|class\\|if\\|elif\\|else\\|for\\|try\\|except\\)\\>"
 	           nil
@@ -86,16 +99,16 @@ This would get rid of some annoyance:
 	        (setcdr old-config python-hideshow-exp)
 	      (add-to-list 'hs-special-modes-alist `(python-mode ,python-hideshow-exp)))))
       
-(defun eepy-toggle-hideshow (&optional arg)
+(defun eepy/toggle-hideshow (&optional arg)
   "Toggle `hs-minor-mode' for current buffer.
 
 If called with t or any positive number, turn on `hs-minor-mode';
 if called with any negative number, turn if off;
-otherwise, turn it on according to `eepy-enable-hideshow'."
+otherwise, turn it on according to `eepy/enable-hideshow'."
   (interactive "p")
   (if (or (and arg (not (integerp arg)))  ;; t
           (and (integerp arg) (> arg 0))  ;; >0
-          (and (not arg) eepy-enable-hideshow))
+          (and (not arg) eepy/enable-hideshow))
       (if (and (require 'hideshowvis nil t)
                (require 'hideshow-fringe nil t))
           (hideshowvis-enable)
@@ -105,26 +118,26 @@ otherwise, turn it on according to `eepy-enable-hideshow'."
           (hideshowvis-minor-mode -1))
       (hs-minor-mode -1))))
 
-(add-hook 'python-mode-hook 'eepy-toggle-hideshow 'append)
+(add-hook 'python-mode-hook 'eepy/toggle-hideshow 'append)
 
 ;;*** outline
 (autoload 'qtmstr-outline-mode "qtmstr-outline"
   "TODO" t)
 
-(defcustom eepy-enable-outline nil
+(defcustom eepy/enable-outline nil
   "Whether to enable `outline-minor-mode' for code folding by default."
   :group 'eepy)
 
-(defun eepy-toggle-outline (&optional arg)
+(defun eepy/toggle-outline (&optional arg)
   "Toggle `outline-minor-mode' for current buffer.
 
 If called with t or any positive number, turn on `outline-minor-mode';
 if called with any negative number, turn if off;
-otherwise, turn it on according to `eepy-enable-outline'."
+otherwise, turn it on according to `eepy/enable-outline'."
   (interactive "p")
   (if (or (and arg (not (integerp arg)))  ;; t
           (and (integerp arg) (> arg 0))  ;; >0
-          (and (not arg) eepy-enable-outline))
+          (and (not arg) eepy/enable-outline))
       (if (require 'qtmstr-outline nil t)
           (qtmstr-outline-mode t)
         (outline-minor-mode t))
@@ -133,7 +146,8 @@ otherwise, turn it on according to `eepy-enable-outline'."
           (qtmstr-outline-mode -1)
       (hs-minor-mode -1)))))
                
-;;(add-hook 'python-mode-hook 'eepy-toggle-outline 'append)
+;;(add-hook 'python-mode-hook 'eepy/toggle-outline 'append)
+
 
 ;;*** highlighting something
 (autoload 'pretty-lambda-mode "pretty-lambdada"
@@ -167,35 +181,12 @@ otherwise, turn it on according to `eepy-enable-outline'."
      ))
 
 
-;; some helper for `auto-complete'
-(defun ac-toggle-source (source &optional desire)
-  "Add or remove a SOURCE in `ac-sources'.
-
-If DESIRE given, this source would be absolutely added (if DESIRE > 0) or
-remove (if DESIRE <= 0). If DESIRE not given, it would be toggled."
-  (interactive
-   (list (intern-soft (ido-completing-read "Source: "
-                                           (loop for x being the symbols
-                                                 if (and (boundp x)
-                                                         (string-match "^ac-source-" (symbol-name x)))
-                                                 collect (symbol-name x))))))
-  (when (and source (symbolp source))
-    (if desire
-        (if (> desire 0)
-            (add-to-list 'ac-sources source)
-          (setq ac-sources (remq source ac-sources)))
-      (if (memq source ac-sources)
-          (setq ac-sources (remq source ac-sources))
-        (add-to-list 'ac-sources source)))
-    (message "Source `%s' %s." source (if (memq source ac-sources)
-                                          "enabled"
-                                        "disabled"))))
-
 ;;*** misc
 (autoload 'iedit-mode "iedit"
   "Edit multiple regions with the same content simultaneously." t)
 
-(defun rename-symbol-in-defun ()
+;;FIXME: iedit.el already has iedit-symbol-in-defun
+(defun eepy/rename-symbol-in-defun ()
   "Enter `iedit-mode' to rename the symbol in current function, or exit it."
   (interactive)
   (let ( (symbol (thing-at-point 'symbol)) )
@@ -207,7 +198,7 @@ remove (if DESIRE <= 0). If DESIRE not given, it would be toggled."
               (widen))
           (narrow-to-defun)
           (iedit-mode t)
-          (message "When done, run `rename-symbol-in-defun' again to quit."))
+          (message "When done, run `eepy/rename-symbol-in-defun' again to quit."))
       (message "You need to put cursor on an identifier."))))
 
 

@@ -1,3 +1,11 @@
+;;; eepy-pymisc --- misc stuff related to python
+
+;; This file is part of Enhaneced Emacs for PYthon suite
+;;   http://github.com/bamanzi/eepy
+
+;; Copyright (C) 2012 Ba Manzi <bamanzi@gmail.com>
+;; This file is distributed under GPL v2.
+
 
 ;; Virtualenv Commands
 (autoload 'virtualenv-activate "virtualenv"
@@ -25,6 +33,5 @@
 ;; PyDB
 (autoload 'pydb  "pydb"
   "Run pydb on program FILE in buffer *gud-cmd-FILE*." t)
-
 
 (provide 'eepy-pymisc)

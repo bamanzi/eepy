@@ -1,5 +1,10 @@
 ;;; eepy-ropemacs --- ropemacs support for EEPY suite
 
+;; This file is part of Enhaneced Emacs for PYthon suite
+;;   http://github.com/bamanzi/eepy
+
+;; Copyright (C) 2012 Ba Manzi <bamanzi@gmail.com>
+;; This file is distributed under GPL v2.
 
 ;; This file is part of EEPY suite.
 
