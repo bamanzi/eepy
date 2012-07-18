@@ -7,11 +7,6 @@
 ;; This file is distributed under GPL v2.
 
 
-;; Virtualenv Commands
-(autoload 'virtualenv-activate "virtualenv"
-  "Activate a Virtual Environment specified by PATH" t)
-(autoload 'virtualenv-workon "virtualenv"
-  "Activate a Virtual Environment present using virtualenvwrapper" t)
 
 
 ;; Cython Mode
@@ -30,8 +25,5 @@
 ;; Django
 ;;...
 
-;; PyDB
-(autoload 'pydb  "pydb"
-  "Run pydb on program FILE in buffer *gud-cmd-FILE*." t)
 
 (provide 'eepy-pymisc)
