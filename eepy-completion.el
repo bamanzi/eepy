@@ -132,6 +132,7 @@ by ropeproject hook."
       (setq ac-sources (remq ac-source-pycompletemine ac-sources)))))
 
 ;;*** ipython (only python-mode.el supported)
+;;TODO: not tested yet
 ;;stolen from https://bitbucket.org/tavisrudd/emacs.d/src/tip/dss-completion.el
 
 ;;; partially working support for using auto complete in ipython buffers

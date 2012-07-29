@@ -121,6 +121,7 @@ otherwise, turn it on according to `eepy/enable-hideshow'."
 (add-hook 'python-mode-hook 'eepy/toggle-hideshow 'append)
 
 ;;*** outline
+(require 'outline)
 (autoload 'qtmstr-outline-mode "qtmstr-outline"
   "TODO" t)
 

@@ -82,7 +82,8 @@
   (interactive "D")
   (unless (fboundp 'rope-open-project)
     (eepy-setup-ropemacs))
-  (rope-open-project dir))
+  (rope-open-project dir)
+  (ropemacs-mode t))
 
 (defun eepy-detect-rope-project ()
   (cond ((file-exists-p ".ropeproject")

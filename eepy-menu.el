@@ -40,22 +40,24 @@
       ;; ["Pretty lambda mode" pretty-lambda-mode
       ;;  :style toggle :selected lambda-mode
       ;;  :help "Pretty-print lambdas"]
-      ["Develock mode" develock-mode
-       :help "A lightweight way to highlight code formatting problems (indentation, whitespaces, long lines...)"
-       :style toggle :selected (and (fboundp 'develock-mode) develock-mode)]
+      ;; ["Develock mode" develock-mode  ;;FIXME: develock would cause some problems
+      ;;  :help "A lightweight way to highlight code formatting problems (indentation, whitespaces, long lines...)"
+      ;;  :style toggle :selected (and (boundp 'develock-mode) develock-mode)]
       ["Highlight indentation mode" (if (fboundp 'highlight-indentation-mode)  
                                         (highlight-indentation-mode) ;;https://github.com/antonj/Highlight-Indentation-for-Emacs
                                       (highlight-indentation))  ;;python-mode project
        :style toggle :selected (if (boundp 'highlight-indent-active)
                                    highlight-indent-active
-                                 highlight-indentation-mode)                              
+                                 (if (boundp 'highlight-indentation-mode)
+				     highlight-indentation-mode
+				   nil))
        :help "Highlight indentation."]
       "--"
       ["Smart operator mode" smart-operator-mode
-       :style toggle :selected smart-operator-mode
+       :style toggle :selected (and (boundp 'smart-operator-mode) smart-operator-mode)
        :help "Insert operators with surrounding spaces smartly."]
       ["Autopair mode" autopair-mode
-       :style toggle :selected autopair-mode
+       :style toggle :selected (and (boundp 'autopair-mode) autopair-mode)
        :help "Automagically pair braces and quotes like TextMate."]
       ("Auto-Complete"
        ["on/off" auto-complete-mode
@@ -75,7 +77,7 @@
         :style toggle :selected (memq 'ac-source-scite-api ac-sources)]
        )
       ("Yasnippets"
-       ["on/off" yasnippet-mode :style: toggle :selected nil]
+       ["on/off" yasnippet-mode :style: toggle :selected (and (boundp 'yasnippet-mode) yasnippet-mode)]
        ["Load Django templates" nil nil]
        )
       "--"
@@ -92,14 +94,16 @@
       ("Flymake"
        ["on/off"          flymake-mode
         :style toggle :selected flymake-mode]
-       ["Pylint"               (eepy-flymake-with            eepy-flymake-cmdline-epylint)
-        :style radio  :selected (string= eepy-flymake-cmdline eepy-flymake-cmdline-epylint)]
+       ["Pylint"               (eepy-flymake-with            eepy-flymake-cmdline-pylint)
+        :style radio  :selected (and eepy-flymake-cmdline (string-match-p "pylint "  eepy-flymake-cmdline))]
        ["PEP8"                  (eepy-flymake-with            eepy-flymake-cmdline-pep8)
-        :style radio  :selected (string= eepy-flymake-cmdline eepy-flymake-cmdline-pep8)]
+        :style radio  :selected (and eepy-flymake-cmdline (string-match-p "pep8 "   eepy-flymake-cmdline))]
        ["Pyflakes"              (eepy-flymake-with            eepy-flymake-cmdline-pyflakes)
-        :style radio  :selected (string= eepy-flymake-cmdline eepy-flymake-cmdline-pyflakes)]
+        :style radio  :selected (and eepy-flymake-cmdline (string-match-p "pyflakes " eepy-flymake-cmdline))]
        ["Pychecker"             (eepy-flymake-with            eepy-flymake-cmdline-pychecker)
-        :style radio  :selected (string= eepy-flymake-cmdline eepy-flymake-cmdline-pychecker)]
+        :style radio  :selected (and eepy-flymake-cmdline (string-match-p "pychecker " eepy-flymake-cmdline))]
+;;       ["(unknown)"   nil
+;;        :style radio]
        ["Set default checker..." (customize-variable 'eepy-flymake-cmdline)]
        "--"
        ["next error"      flymake-goto-next-error :active flymake-mode]
@@ -125,17 +129,24 @@
        :help "Query help with 'pydoc' command line tool"]
       "--"
       ("Project"
-       ["open rope project..." eepy-rope-open-project]
+       ["open/create rope project..." eepy-open-rope-project]
        ["auto-open ropeproject if found" eepy-toggle-auto-detect-rope-project
         :style toggle :selected eepy-auto-detect-rope-project]
-       ["eproject" eproject t]
+       ["ropemacs-mode" ropemacs-mode
+        :style toggle :selected (and (boundp 'ropemacs-mode) ropemacs-mode)]
+       "--"
+;;       ["eproject" eproject t]
+       ["Projectile mode" projectile-global-mode
+	:style toggle :selected (and (boundp 'projectile-global-mode) projectile-global-mode)]
+       ["Create projectile project..." projectile-create-project]
+       "--"
        ["Tags tree" tags-tree t]
       )
       ("Misc"
        ["refactoring: rename current symbol" iedit-mode
        :help "Use `iedit-mode' to replace all occurren of current symbol in whole buffer."]
        ["refactoring: rename current symbol in function"  eepy-iedit-in-defun
-       :style toggle :selected iedit-mode
+       :style toggle :selected (and (boundp 'iedit-mode) iedit-mode)
        :help "Use `narrow-to-defun' and 'iedit-mode' to replace all "]
        )
       )))

@@ -9,14 +9,50 @@
 (require 'eepy-init)
 
 ;;** Info - `info-lookup-symbol' (C-h S)
+;; For python <= 2.5, info document for python is included in the python
+;; release packages. 
 
-;; With python 2.6's switching to sphinx as documentation tool, the texinfo
+;; But with python 2.6's switching to sphinx as documentation tool, the texinfo
 ;; document no longer provided with python official releases.
 ;;
 ;; You can generate texinfo documents following these info:
 ;;  http://stackoverflow.com/questions/1054903/how-do-you-get-python-documentation-in-texinfo-info-format
 ;;  http://bitbucket.org/jonwaltman/sphinx-info
 ;;  http://bitbucket.org/jonwaltman/rst2texinfo/src
+
+;;*** pydoc-info: Search and browse the Python documentation in Info
+;;  https://bitbucket.org/jonwaltman/pydoc-info/
+;;advantages:
+;;   1. info document for python-2.7 already provided with pydoc-info
+;;   2. you can add other sphinx-based documents to lookup
+;;disadvantages:
+;;   1. for python versions other than 2.7, you need to generate info document by yourself
+
+(eval-after-load "pydoc-info"
+  `(progn
+     (add-to-list 'Info-default-directory-list (concat eepy-install-dir "info/"))
+     (add-to-list 'Info-directory-list (concat eepy-install-dir "info/"))
+
+     ;;then use C-h S (`info-lookup-symbol') to lookup python doc
+
+     ;;FIXME: not tested
+     (when nil
+     ;;for python <= 2.5
+       (info-lookup-add-help
+        :mode 'python-mode
+        :parse-rule 'pydoc-info-python-symbol-at-point
+        :doc-spec
+        '(("(python2.5)Index" pydoc-info-lookup-transform-entry)
+          ("(sphinx)Index" pydoc-info-lookup-transform-entry))))
+     ))
+
+(eval-after-load "info-look"
+  `(progn
+     (require 'pydoc-info nil t)
+     ))
+
+
+;;*** another way, based on code stolen from Dave Love's python.el
 ;;
 ;; But if you're lazy, you can force to use python-2.5's info file
 ;;   http://packages.debian.org/squeeze/python2.5-doc
@@ -26,8 +62,7 @@
 This is just useful when the version number of your python installation
 is different from the one of your python info docs.")
 
-;;stolen from Dave Love's python.el
-;;  
+
 (defun python-init-info-look ()
   "Set up info-look for Python.
 Tries to take account of versioned Python Info files, e.g. Debian's
@@ -143,7 +178,7 @@ Used with `eval-after-load'."
 
 
 ;;** pydoc command line
-;;stolen from http://stackoverflow.com/questions/1054903/how-do-you-get-python-documentation-in-texinfo-info-format
+;;stolen from http://stackoverflow.com/a/1068731
 (defun eepy-pydoc (&optional arg)
   (interactive (list
 				(read-string "Call pydoc with arg: "
@@ -153,8 +188,9 @@ Used with `eval-after-load'."
   (ad-activate-regexp "auto-compile-yes-or-no-p-always-yes")
   (shell-command cmd)
   (setq pydoc-buf (get-buffer "*Shell Command Output*"))
-  (switch-to-buffer-other-window pydoc-buf)
-  (python-mode)
+  ;;(switch-to-buffer-other-window pydoc-buf)
+  (with-current-buffer pydoc-buf
+    (python-mode))
   (ad-deactivate-regexp "auto-compile-yes-or-no-p-always-yes")
 )
 

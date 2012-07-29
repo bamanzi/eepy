@@ -98,6 +98,14 @@
           temp-file
           (file-name-directory buffer-file-name))))
 
+(defvar eepy-flymake-default-cmdline "epylint %f"
+  "Fail-safe value for `eepy-flymake-cmdline.")
+
+(defvar eepy-flymake-cmdline-pylint    "epylint %f")
+(defvar eepy-flymake-cmdline-pep8      "pep8 %f")
+(defvar eepy-flymake-cmdline-pychecker "pychecker %f")
+(defvar eepy-flymake-cmdline-pyflakes  "pyflakes %f")
+
 (defcustom eepy-flymake-cmdline nil
   "Syntax checker command line used for flymake-mode in python.
 
@@ -113,18 +121,18 @@ e.g.
 
 Make sure a `%f' is included in the command line"
   :type '(choice (const :tag "Off" nil)
-                 (const :tag "pylint"     "epylint \"%f\"")
-                 (const :tag "pep8"       "pep8 \"%f\"")
-                 (const :tag "pycheckers" "pycheckers \"%f\""  )
-                 (const :tag "pyflakes"   "pyflakes \"%f\"")
+                 (const :tag "pylint"     eepy-flymake-cmdline-pylint)
+                 (const :tag "pep8"       eepy-flymake-cmdline-pep8)
+                 (const :tag "pychecker"  eepy-flymake-cmdline-pychecker)
+                 (const :tag "pyflakes"   eepy-flymake-cmdline-pyflakes)
                  (string :tag "custom..."))
   :group 'eepy)
 
 
 (defun flymake-eepy-init ()
     (let ((cmdline-subst (replace-regexp-in-string "%f"
-                                                   (flymake-create-copy-file)
-                                                   eepy-flymake-cmdline)))
+                                                   (shell-quote-argument (flymake-create-copy-file))
+                                                   (or eepy-flymake-cmdline eepy-flymake-default-cmdline))))
     (setq cmdline-subst (split-string-and-unquote cmdline-subst))
     (list (first cmdline-subst) (rest cmdline-subst))
     ))
@@ -134,16 +142,16 @@ Make sure a `%f' is included in the command line"
 (defun eepy-flymake-with (cmdline)
   (interactive
       (list (ido-completing-read "Checker: "
-                              '("epylint \"%f\""
-                                "pep8 \"%f\""
-                                "pyflakes \"%f\""
-                                "pychecker \"%f\"")
+                              '(eepy-flymake-cmdline-pylint
+                                eepy-flymake-cmdline-pep8
+                                eepy-flymake-cmdline-pyflakes
+                                eepy-flymake-cmdline-pychecker)
                               nil
                               nil
                               nil
                               nil
                               eepy-flymake-cmdline)))
-  (make-variable-buffer-local 'eepy-flymake-cmdline)
+;;  (make-variable-buffer-local 'eepy-flymake-cmdline)
   (setq eepy-flymake-cmdline cmdline)
   (flymake-mode -1)
   (flymake-mode t))
