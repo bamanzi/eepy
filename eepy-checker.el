@@ -156,12 +156,12 @@ Make sure a `%f' is included in the command line"
   (flymake-mode -1)
   (flymake-mode t))
 
-(defun python-mode-hook-flymake ()
+(defun eepy-python-mode-hook-flymake ()
   "initialize flymake on open python files."
   (when eepy-flymake-cmdline
     (eepy-flymake-with eepy-flymake-cmdline)))
 
-(add-hook 'python-mode-hook 'python-mode-hook-flymake)
+(add-hook 'python-mode-hook 'eepy-python-mode-hook-flymake)
 
 
 (provide 'eepy-checker)

@@ -68,12 +68,12 @@ You don't need add `ac-source-nropemacs' into this, as it's due to add
 by ropeproject hook."
   :group 'eepy)
 
-(defun python-mode-init-ac-sources ()
+(defun eepy-python-mode-init-auto-complete ()
   (mapc #'(lambda (source)
             (add-to-list 'ac-sources source))
         eepy-auto-complete-sources))
 
-(add-hook 'python-mode-hook 'python-mode-init-ac-sources)  
+(add-hook 'python-mode-hook 'eepy-python-mode-init-auto-complete)  
   
 ;;*** Emacs's built-in completion
 ;;advantages:
@@ -98,13 +98,13 @@ by ropeproject hook."
      (symbol . "py")
      (prefix . "[ \t\n['\",()]\\([^\t\n['\",()]+\\)\\=") ))
 
-(defun ac-enable-python-builtin-source (&optional on)
-  (interactive)
-  (let ((turn-on (or on
-                     (not (memq ac-source-python-builtin ac-sources)))))
-    (if turn-on
-        (add-to-list 'ac-sources 'ac-source-python-builtin)
-      (setq ac-sources (remq ac-source-python-builtin ac-sources)))))
+;; (defun ac-enable-python-builtin-source (&optional on)
+;;   (interactive)
+;;   (let ((turn-on (or on
+;;                      (not (memq ac-source-python-builtin ac-sources)))))
+;;     (if turn-on
+;;         (add-to-list 'ac-sources 'ac-source-python-builtin)
+;;       (setq ac-sources (remq ac-source-python-builtin ac-sources)))))
 
 
 ;;*** pycompletemine from PDEE (https://github.com/pdee/pdee/ )
@@ -115,6 +115,7 @@ by ropeproject hook."
 ;;   + doc info and signature for completions
 ;;disadvantages:
 ;;   - `pymacs' needed
+;;   - no 'send region' support, thus no completion for dynamic object
 
 (ac-define-source pycompletemine
   '((depends pycompletemine)  ;;FIXME: ok?
@@ -123,13 +124,13 @@ by ropeproject hook."
     (symbol . "pyc")
     (document . py-complete-help)))
 
-(defun ac-enable-pycompletemine-source (&optional on)
-  (interactive)
-  (let ((turn-on (or on
-                     (not (memq ac-source-pycompletemine ac-sources)))))
-    (if turn-on
-        (add-to-list 'ac-sources 'ac-source-pycompletemine)
-      (setq ac-sources (remq ac-source-pycompletemine ac-sources)))))
+;; (defun ac-enable-pycompletemine-source (&optional on)
+;;   (interactive)
+;;   (let ((turn-on (or on
+;;                      (not (memq ac-source-pycompletemine ac-sources)))))
+;;     (if turn-on
+;;         (add-to-list 'ac-sources 'ac-source-pycompletemine)
+;;       (setq ac-sources (remq ac-source-pycompletemine ac-sources)))))
 
 ;;*** ipython (only python-mode.el supported)
 ;;TODO: not tested yet
@@ -234,6 +235,11 @@ by ropeproject hook."
 (require 'eepy-ropemacs)
 
 ;;** yasnippets
+
+(autoload 'yas/minor-mode  "yasnippet-bundle"
+  "Toggle YASnippet mode." t)
+(autoload 'yas/global-mode "yasnippet-bundle"
+  "Toggle Yas/Minor mode in every possible buffer." t)
 
 ;; Disabling Yasnippet completion 
 (defun epy-snips-from-table (table)

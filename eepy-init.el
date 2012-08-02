@@ -67,7 +67,12 @@
   "Detect the vendor of current buffer's major-mode.
 
 In case user loaded another implementation after opened some buffers,
-here our check are buffer-specific."
+here our check are buffer-specific.
+
+'python-mode-el https://launchpad.net/python-mode
+'fgallina       http://github.com/fgallina/python.el
+'loveshack      http://www.loveshack.ukfsn.org/emacs/python.el
+'built-in       GNU Emacs built-in"
   (let ((pkgpath (symbol-file major-mode)))
     (cond
      ((string-match "python-mode[\./]" pkgpath)

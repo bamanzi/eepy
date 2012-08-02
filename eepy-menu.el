@@ -77,7 +77,7 @@
         :style toggle :selected (memq 'ac-source-scite-api ac-sources)]
        )
       ("Yasnippets"
-       ["on/off" yasnippet-mode :style: toggle :selected (and (boundp 'yasnippet-mode) yasnippet-mode)]
+       ["on/off" yas/minor-mode :style: toggle :selected (and (boundp 'yas/minor-mode) yas/minor-mode)]
        ["Load Django templates" nil nil]
        )
       "--"
@@ -90,6 +90,8 @@
        ["Ask for saving files before syntax checking"
         (setq compilation-ask-about-save (not compilation-ask-about-save))
         :style toggle :selected compilation-ask-about-save]
+       ["next error"      next-error t]
+       ["previous error"  previous-error t]
        )
       ("Flymake"
        ["on/off"          flymake-mode

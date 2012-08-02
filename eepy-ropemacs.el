@@ -10,14 +10,16 @@
 
 (require 'eepy-init)
 
-(defun ropemacs-mode ()
-  "Temp loader for real `ropemacs-mode'."
-  ;; load ropemacs first
-  (unless (fboundp 'ropemacs-mode)
-        (eepy-setup-ropemacs))
-  ;; invoke the real `ropemacs-mode'.
-  (unless (symbol-file 'ropemacs-mode) ;;if ropemacs correctly loaded, it should be nil
-    (call-interactively 'ropemacs-mode)))
+(unless (fboundp 'ropemacs-mode)
+  (defun ropemacs-mode ()
+    (interactive)
+    "Temp loader for real `ropemacs-mode'."
+    ;; load ropemacs first
+    (unless (fboundp 'rope-open-project)
+      (eepy-setup-ropemacs))
+    ;; invoke the real `ropemacs-mode'.
+    (unless (symbol-file 'ropemacs-mode) ;;if ropemacs correctly loaded, it should be nil
+      (call-interactively 'ropemacs-mode)))
       
 (defun eepy-setup-ropemacs ()
   (require 'pymacs (concat eepy-install-dir "extensions/pymacs.el"))
@@ -86,13 +88,13 @@
   (ropemacs-mode t))
 
 (defun eepy-detect-rope-project ()
-  (cond ((file-exists-p ".ropeproject")
-         (eepy-open-rope-project default-directory)
-         (ropemacs-mode t))
-        ((file-exists-p "../.ropeproject")
-         (eepy-open-rope-project (concat default-directory ".."))
-         (ropemacs-mode t))
-        ))
+  (let ((prj-dir (locate-dominating-file default-directory ".ropeproject")))
+    (when prj-dir
+        (progn
+          (eepy-open-rope-project prj-dir)
+          ;(ropemacs-mode t)
+          )
+        )))
 
 (defvar eepy-auto-detect-rope-project nil
   "Whether to auto-detect `.ropeproject' file and turn on ropemacs-mode.")
@@ -117,6 +119,12 @@ load it with ropemacs."
            (if eepy-auto-detect-rope-project "" " NOT"))
   )
 
+
+(defun eepy-file-in-rope-project-p ()
+  "Whether current file is in current rope project."
+  (let* ((prj-dir (rope-get-project-root))
+         (foo (substring (or (buffer-file-name) default-directory) 0 (length prj-dir))))
+    (string= prj-dir foo))
 
 (provide 'eepy-ropemacs)
 
