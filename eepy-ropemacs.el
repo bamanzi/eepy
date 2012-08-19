@@ -20,6 +20,7 @@
     ;; invoke the real `ropemacs-mode'.
     (unless (symbol-file 'ropemacs-mode) ;;if ropemacs correctly loaded, it should be nil
       (call-interactively 'ropemacs-mode)))
+  )
       
 (defun eepy-setup-ropemacs ()
   (require 'pymacs (concat eepy-install-dir "extensions/pymacs.el"))
@@ -119,12 +120,11 @@ load it with ropemacs."
            (if eepy-auto-detect-rope-project "" " NOT"))
   )
 
-
 (defun eepy-file-in-rope-project-p ()
   "Whether current file is in current rope project."
   (let* ((prj-dir (rope-get-project-root))
          (foo (substring (or (buffer-file-name) default-directory) 0 (length prj-dir))))
-    (string= prj-dir foo))
+    (string= prj-dir foo)))
 
 (provide 'eepy-ropemacs)
 

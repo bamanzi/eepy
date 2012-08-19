@@ -84,7 +84,7 @@
       ("Syntax Check"
        ["Pylint"    eepy-pylint t]
        ["PEP8"      eepy-pep8 t]
-       ["Pyflakes"  eepy-pyflake t]
+       ["Pyflakes"  eepy-pyflakes t]
        ["Pychecker" eepy-pychecker t]
        "--"
        ["Ask for saving files before syntax checking"

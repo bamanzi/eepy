@@ -142,10 +142,11 @@ Make sure a `%f' is included in the command line"
 (defun eepy-flymake-with (cmdline)
   (interactive
       (list (ido-completing-read "Checker: "
-                              '(eepy-flymake-cmdline-pylint
-                                eepy-flymake-cmdline-pep8
-                                eepy-flymake-cmdline-pyflakes
-                                eepy-flymake-cmdline-pychecker)
+                              (list
+                               eepy-flymake-cmdline-pylint
+                               eepy-flymake-cmdline-pep8
+                               eepy-flymake-cmdline-pyflakes
+                               eepy-flymake-cmdline-pychecker)
                               nil
                               nil
                               nil
