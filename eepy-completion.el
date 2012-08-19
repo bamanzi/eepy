@@ -55,7 +55,7 @@ remove (if DESIRE <= 0). If DESIRE not given, it would be toggled."
 
 (defcustom eepy-auto-complete-sources
   '(
-    ;;ac-source-python-builtin
+    ac-source-python-builtin
     ac-source-pycompletemine
     ;;ac-source-scite-api
     ;;ac-source-yasnippet
@@ -116,6 +116,9 @@ by ropeproject hook."
 ;;disadvantages:
 ;;   - `pymacs' needed
 ;;   - no 'send region' support, thus no completion for dynamic object
+
+(autoload 'py-complete "pycompletemine" nil t)
+(define-key python-mode-map (kbd "ESC M-TAB") 'py-complete)
 
 (ac-define-source pycompletemine
   '((depends pycompletemine)  ;;FIXME: ok?

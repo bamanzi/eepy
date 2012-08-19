@@ -59,6 +59,14 @@
       ["Autopair mode" autopair-mode
        :style toggle :selected (and (boundp 'autopair-mode) autopair-mode)
        :help "Automagically pair braces and quotes like TextMate."]
+      ("Complete symbol"
+       ["Emacs built-in method" (if (fboundp 'completion-at-point) (completion-at-point) (symbol-complete))
+        :help "Emacs built-in completion method."]
+       ["py-complete" py-complete
+        :help "py-complete from pycompletemine.el. needs pymacs."]
+       ["rope completion" rope-completions
+        :help "ropemacs' completion for project. needs pymacs & ropemacs."]
+       )      
       ("Auto-Complete"
        ["on/off" auto-complete-mode
         :style toggle :selected auto-complete-mode]

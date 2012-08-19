@@ -248,6 +248,8 @@
   )
 
 (py-complete-init-keys python-mode-map)
+(unless (boundp 'python-shell-map)   
+  (defalias 'inferior-python-mode-map 'python-shell-map)) ;; Emacs 24 or fgallina's python.el
 (py-complete-init-keys python-shell-map)
 (define-key python-shell-map "\C-i" 'py-complete)
 
