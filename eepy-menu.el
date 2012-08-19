@@ -97,13 +97,13 @@
        ["on/off"          flymake-mode
         :style toggle :selected flymake-mode]
        ["Pylint"               (eepy-flymake-with            eepy-flymake-cmdline-pylint)
-        :style radio  :selected (and eepy-flymake-cmdline (string-match-p "pylint "  eepy-flymake-cmdline))]
+        :style radio  :selected (and flymake-mode eepy-flymake-cmdline (string-match-p "pylint "  eepy-flymake-cmdline))]
        ["PEP8"                  (eepy-flymake-with            eepy-flymake-cmdline-pep8)
-        :style radio  :selected (and eepy-flymake-cmdline (string-match-p "pep8 "   eepy-flymake-cmdline))]
+        :style radio  :selected (and flymake-mode eepy-flymake-cmdline (string-match-p "pep8 "   eepy-flymake-cmdline))]
        ["Pyflakes"              (eepy-flymake-with            eepy-flymake-cmdline-pyflakes)
-        :style radio  :selected (and eepy-flymake-cmdline (string-match-p "pyflakes " eepy-flymake-cmdline))]
+        :style radio  :selected (and flymake-mode eepy-flymake-cmdline (string-match-p "pyflakes " eepy-flymake-cmdline))]
        ["Pychecker"             (eepy-flymake-with            eepy-flymake-cmdline-pychecker)
-        :style radio  :selected (and eepy-flymake-cmdline (string-match-p "pychecker " eepy-flymake-cmdline))]
+        :style radio  :selected (and flymake-mode eepy-flymake-cmdline (string-match-p "pychecker " eepy-flymake-cmdline))]
 ;;       ["(unknown)"   nil
 ;;        :style radio]
        ["Set default checker..." (customize-variable 'eepy-flymake-cmdline)]
