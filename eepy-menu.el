@@ -123,10 +123,30 @@
       "--"
       ["eldoc-mode" eldoc-mode
        :style toggle :selected eldoc-mode]
-      ["pylookup" pylookup-lookup
-       :active nil]
-      ["python.chm (windows)" eepy-chm-lookup-keyword
-       :active (eq window-system 'w32)]
+      ;; ["pylookup" pylookup-lookup
+      ;;  :active nil]
+      ("python.info"
+       ["Lookup current symbol" info-lookup-symbol
+        :active (featurep 'pydoc-info)]
+       "--"
+       ["The Python Tutorial"         (info "(python) The Python Tutorial")
+        :active (featurep 'pydoc-info)]
+       ["Python Language Reference"   (info "(python) The Python Language Reference")
+        :active (featurep 'pydoc-info)]
+       ["The Python Standard Library" (info "(python) The Python Standard Library")
+        :active (featurep 'pydoc-info)]
+       )
+      ("python.chm (windows only)"
+       ["Lookup current symbol" eepy-chm-lookup-keyword
+        :active (eq window-system 'w32)]
+       "--"
+       ["The Python Tutorial"         (eepy-chm-open-page "/tutorial/index.html")
+        :active (eq window-system 'w32)]
+       ["Python Language Reference"   (eepy-chm-open-page "/reference/index.html")
+        :active (eq window-system 'w32)]
+       ["The Python Standard Library" (eepy-chm-open-page "/library/index.html")
+        :active (eq window-system 'w32)]
+       )
       ["pydoc" eepy-pydoc
        :help "Query help with 'pydoc' command line tool"]
       "--"

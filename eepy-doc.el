@@ -159,14 +159,29 @@ Used with `eval-after-load'."
                  "-#klink" (format "'%s'" symbol)
                  help-file ))
 
+(defun chm-open-page (typeid help-file &optional page)
+  "Launch CHM file."
+  (start-process "keyhh" nil
+                 "keyhh.exe"
+                 (concat "-" typeid)
+                 help-file
+                 (if page
+                     (concat "::" page))))
+
 (defun eepy-chm-lookup-keyword (symbol)
   (interactive
    (list (read-string "Help on symbol(CHM): "
                       (or (thing-at-point 'symbol) ""))))
-  (if (file-exists-p epy-python-chm-file)
+  (if (file-exists-p epy-python-chm-file-path)
       (chm-lookup-keyword "EEPY" eepy-python-chm-file-path symbol)
-   (message "File not exists: %s" epy-python-chm-file)))
+   (message "File not exists: %s. Please customize variable `eepy-python-chm-file-path'."
+            epy-python-chm-file-path)))
 
+(defun eepy-chm-open-page (path)
+  (if (file-exists-p epy-python-chm-file-path)  
+      (chm-open-page "EEPY" eepy-python-chm-file-path path)
+   (message "File not exists: %s. Please customize variable `eepy-python-chm-file-path'."
+            epy-python-chm-file-path)))
 
 ;;** pylookup
 ;;TODO: http://taesoo.org/Opensource/Pylookup
@@ -190,7 +205,10 @@ Used with `eval-after-load'."
   (setq pydoc-buf (get-buffer "*Shell Command Output*"))
   ;;(switch-to-buffer-other-window pydoc-buf)
   (with-current-buffer pydoc-buf
-    (python-mode))
+    ;; (python-mode)
+    (require 'woman)
+    (woman-man-buffer)
+    (help-mode))    
   (ad-deactivate-regexp "auto-compile-yes-or-no-p-always-yes")
 )
 
