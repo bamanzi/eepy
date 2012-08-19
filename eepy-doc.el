@@ -46,24 +46,20 @@
           ("(sphinx)Index" pydoc-info-lookup-transform-entry))))
      ))
 
-(eval-after-load "info-look"
-  `(progn
-     (require 'pydoc-info nil t)
-     ))
-
+;;(require 'pydoc-info)
 
 ;;*** another way, based on code stolen from Dave Love's python.el
 ;;
 ;; But if you're lazy, you can force to use python-2.5's info file
 ;;   http://packages.debian.org/squeeze/python2.5-doc
-(defvar eepy-python-info-force-version "2.5"
+(defvar eepy-python-info-force-version nil
   "The version number used to look for pythonX.X-{ref,lib}.info file.
 
 This is just useful when the version number of your python installation
 is different from the one of your python info docs.")
 
 
-(defun python-init-info-look ()
+(defun eepy-init-python-info-look ()
   "Set up info-look for Python.
 Tries to take account of versioned Python Info files, e.g. Debian's
 python2.5-ref.info.gz.
@@ -137,7 +133,9 @@ Used with `eval-after-load'."
 	 ("(python-lib)Function-Method-Variable Index")
 	 ("(python-lib)Miscellaneous Index"))))))
 
-(eval-after-load "info-look" '(python-init-info-look))
+(if eepy-python-info-force-version
+    (eepy-init-python-info-look)
+  (require 'pydoc-info))
 
 
 ;;** CHM (only available on Windows)

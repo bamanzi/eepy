@@ -143,6 +143,8 @@
         :active (featurep 'pydoc-info)]
        ["The Python Standard Library" (info "(python) The Python Standard Library")
         :active (featurep 'pydoc-info)]
+       ["Python Module Index"         (info "(python) Python Module Index")
+        :active (featurep 'pydoc-info)]
        )
       ("python.chm (windows only)"
        ["Lookup current symbol" eepy-chm-lookup-keyword
@@ -154,6 +156,8 @@
         :active (eq window-system 'w32)]
        ["The Python Standard Library" (eepy-chm-open-page "/library/index.html")
         :active (eq window-system 'w32)]
+       ["Python Module Index"         (eepy-chm-open-page "/modindex.html")
+        :active (eq window-system 'w32)]       
        )
       ["pydoc" eepy-pydoc
        :help "Query help with 'pydoc' command line tool"]
